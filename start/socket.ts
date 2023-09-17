@@ -2,10 +2,11 @@ import Ws from 'App/Services/Ws'
 
 Ws.boot()
 
-Ws.io.on('connection', (socket) => {
-  socket.emit('news', { status: 'ok' })
+const { io } = Ws
 
-  socket.on('other event', (data) => {
-    console.log(data)
+io.on('connection', (socket) => {
+  // All sockets except the current socket retrieve messages
+  socket.on('send:message', data => {
+    socket.broadcast.emit('get:messages', data)
   })
 })

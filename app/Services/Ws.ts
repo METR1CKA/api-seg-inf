@@ -7,7 +7,7 @@ class Ws {
   private instance = AdonisServer.instance!
   private configs = {
     cors: {
-      origin: '*'
+      origin: true
     }
   }
 
