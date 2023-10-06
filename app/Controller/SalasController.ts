@@ -6,7 +6,7 @@ class SalasController {
   /* The line `private path = Application.makePath('storage/salas.json')` is creating a private
   property called `path` and assigning it the value returned by the `makePath` method of the
   `Application` class. */
-  private path = Application.makePath('storage/salas.json')
+  private path = Application.makePath('storage')
   /* The line `private salas: Salas[] = []` is declaring a private property called `salas` and
   initializing it as an empty array of type `Salas[]`. This property is used to store the list of
   `Salas` objects. */
@@ -19,7 +19,9 @@ class SalasController {
    */
   constructor() {
     if (!fs.existsSync(this.path)) {
-      fs.writeFileSync(this.path, JSON.stringify(Salas_Default))
+      fs.mkdirSync(this.path)
+
+      fs.writeFileSync(`${this.path}/salas.json`, JSON.stringify(Salas_Default))
     }
 
     return this
