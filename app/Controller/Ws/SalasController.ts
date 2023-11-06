@@ -1,5 +1,5 @@
 import Application from '@ioc:Adonis/Core/Application'
-import { Salas, Salas_Default } from 'App/Model/Ws/Salas'
+import { Salas, Salas_Default } from 'App/Models/Salas'
 import fs from 'fs'
 
 const dirname = Application.makePath('storage')

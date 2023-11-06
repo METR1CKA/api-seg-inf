@@ -19,7 +19,33 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import 'App/Routes/auth'
+import 'App/Routes/roles'
+import 'App/Routes/salas'
+import 'App/Routes/users'
 
-Route.get('/', async ({ response }) => {
-  return response.ok({ Status: 'Ok' })
+Route.get('/', ({ response }) => {
+  return response.ok({
+    message: 'Practica de encriptacion API',
+    data: null
+  })
+})
+
+Route.get('api/v1', ({ response }) => {
+  return response.ok({
+    message: 'API V1',
+    data: {
+      version: '1.0.0'
+    }
+  })
+})
+
+Route.any('*', ({ request, response }) => {
+  return response.notFound({
+    message: 'Ruta no encontrada',
+    data: {
+      url: request.url(),
+      method: request.method()
+    }
+  })
 })
