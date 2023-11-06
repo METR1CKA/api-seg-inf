@@ -5,33 +5,23 @@ Ws.boot()
 
 const { io } = Ws
 
-io.on('connection', socket => {
-  console.log('\nNueva conexion:', socket.id)
-
-  console.log('\nMandando salas')
-
-  socket.emit('get:salas', getSalas())
+io.on('connection', async socket => {
+  socket.emitWithAck('get:salas', await getSalas())
 
   socket.on('send:message', data => {
     console.log('\nMessage:', data)
 
-    socket.broadcast.emit('get:messages', data)
+    socket.broadcast.emitWithAck('get:messages', data)
   })
 
-  socket.on('send:sala', sala => {
-    console.log('\nSala:', { sala, tsala: typeof sala })
-
+  socket.on('send:sala', async sala => {
     sala = typeof sala == 'string'
       ? JSON.parse(sala)
       : sala
 
-    createSala({ sala })
+    await createSala({ sala })
 
-    const salas = getSalas()
-
-    console.log('\nSala añadida, salas:', salas)
-
-    io.emit('get:salas', salas)
+    io.emitWithAck('get:salas', await getSalas())
   })
 })
 

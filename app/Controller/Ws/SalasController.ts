@@ -1,30 +1,21 @@
-import Application from '@ioc:Adonis/Core/Application'
-import { Salas, Salas_Default } from 'App/Models/Salas'
-import fs from 'fs'
+import Sala from 'App/Models/Sala'
 
-const dirname = Application.makePath('storage')
-const fullpath = `${dirname}/salas.json`
+export const getSalas = async (): Promise<any[]> => {
+  const salas = await Sala.all()
 
-const createDefaultSalas = (): void => {
-  if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname)
+  console.log('salas1', salas.map(sala => sala.toJSON()))
+  console.log('salas2', salas.map(sala => sala.serialize()))
 
-    fs.writeFileSync(fullpath, JSON.stringify(Salas_Default))
-  }
+  return salas.map(sala => {
+    const { nombre, password } = sala
+
+    return {
+      nombre,
+      password,
+    }
+  })
 }
 
-createDefaultSalas()
-
-export const getSalas = (): Salas[] => {
-  return JSON.parse(
-    fs.readFileSync(fullpath, 'utf-8')
-  )
-}
-
-export const createSala = ({ sala }: { sala: Salas }): void => {
-  const salas = getSalas()
-
-  salas.push(sala)
-
-  fs.writeFileSync(fullpath, JSON.stringify(salas))
+export const createSala = async ({ sala }: { sala: Sala }): Promise<void> => {
+  await Sala.create(sala)
 }
