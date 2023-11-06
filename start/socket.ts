@@ -6,12 +6,12 @@ Ws.boot()
 const { io } = Ws
 
 io.on('connection', async socket => {
-  socket.emitWithAck('get:salas', await getSalas())
+  socket.emit('get:salas', await getSalas())
 
   socket.on('send:message', data => {
     console.log('\nMessage:', data)
 
-    socket.broadcast.emitWithAck('get:messages', data)
+    socket.broadcast.emit('get:messages', data)
   })
 
   socket.on('send:sala', async sala => {
@@ -21,7 +21,7 @@ io.on('connection', async socket => {
 
     await createSala({ sala })
 
-    io.emitWithAck('get:salas', await getSalas())
+    io.emit('get:salas', await getSalas())
   })
 })
 
