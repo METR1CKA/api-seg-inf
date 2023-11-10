@@ -44,13 +44,6 @@ const databaseConfig: DatabaseConfig = {
       },
       migrations: {
         naturalSort: true,
-        paths: [
-          // Without foreign keys
-          './database/migrations/NoFK',
-
-          // With foreign keys
-          './database/migrations/FK',
-        ]
       },
       healthCheck: false,
       debug: false,

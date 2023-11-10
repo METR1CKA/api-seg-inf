@@ -1,4 +1,4 @@
-import { getSalas, createSala } from 'App/Controller/Ws/SalasController'
+import { getSalas, createSala } from 'App/Controllers/Ws/SalasController'
 import Ws from 'App/Services/Ws'
 
 Ws.boot()

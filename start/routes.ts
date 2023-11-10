@@ -19,10 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import 'App/Routes/auth'
-import 'App/Routes/roles'
 import 'App/Routes/salas'
-import 'App/Routes/users'
 
 Route.get('/', ({ response }) => {
   return response.ok({
