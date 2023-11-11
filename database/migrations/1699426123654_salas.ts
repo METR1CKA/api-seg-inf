@@ -9,10 +9,13 @@ export default class extends BaseSchema {
         .increments('id')
         .primary()
       table
-        .string('nombre', 200)
+        .string('nombre', 50)
         .notNullable()
       table
         .string('password')
+        .notNullable()
+      table
+        .boolean('active')
         .notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
