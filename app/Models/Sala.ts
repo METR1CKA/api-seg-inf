@@ -14,7 +14,9 @@ export default class Sala extends BaseModel {
   @column()
   public password: string
 
-  @column()
+  @column({
+    serializeAs: null
+  })
   public active: boolean
 
   @column.dateTime({
