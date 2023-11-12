@@ -15,15 +15,21 @@ HOST=0.0.0.0
 NODE_ENV=development
 APP_KEY=C1DGvT8xuyiCVDBWBJkvstYeblA9ZDgF
 DRIVE_DISK=local
+DB_CONNECTION=pg
+PG_HOST=127.0.0.1
+PG_PORT=5432
+PG_USER=lucid
+PG_PASSWORD=
+PG_DB_NAME=lucid
 ```
 
-2. Install dependencies
+2. Install dependencies in dev
 
 ```console
-$ npm install --save
+$ npm i
 ```
 
-3. Deploy in dev
+3. Run in dev
 
 ```console
 $ npm run dev
