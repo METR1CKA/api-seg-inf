@@ -4,7 +4,6 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 export default class Sala extends BaseModel {
   @column({
     isPrimary: true,
-    serializeAs: null
   })
   public id: number
 
@@ -14,21 +13,19 @@ export default class Sala extends BaseModel {
   @column()
   public password: string
 
-  @column({
-    serializeAs: null
-  })
+  @column()
   public active: boolean
 
   @column.dateTime({
     autoCreate: true,
-    serializeAs: null
+    serialize: (value: DateTime) => value.toFormat('yyyy-MM-dd HH:mm:ss')
   })
   public createdAt: DateTime
 
   @column.dateTime({
     autoCreate: true,
     autoUpdate: true,
-    serializeAs: null
+    serialize: (value: DateTime) => value.toFormat('yyyy-MM-dd HH:mm:ss')
   })
   public updatedAt: DateTime
 }

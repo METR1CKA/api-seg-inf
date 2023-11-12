@@ -11,7 +11,6 @@ export const getSalas = async (): Promise<any[]> => {
       password,
     }
   })
-
 }
 
 export const createSala = async ({ sala }: { sala: Sala }): Promise<void> => {

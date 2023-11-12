@@ -16,6 +16,7 @@ export default class extends BaseSchema {
         .notNullable()
       table
         .boolean('active')
+        .defaultTo(true)
         .notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

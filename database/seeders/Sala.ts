@@ -8,19 +8,23 @@ export default class extends BaseSeeder {
     await Sala.createMany([
       {
         nombre: 'Sala sebas',
-        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs='
+        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs=',
+        active: true
       },
       {
         nombre: 'Sala fer',
-        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs='
+        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs=',
+        active: true
       },
       {
         nombre: 'Sala ale',
-        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs='
+        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs=',
+        active: true
       },
       {
         nombre: 'Sala hector',
-        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs='
+        password: '3j1Dyq0r08TwYi/GDe7NBrNKDyWoDjC4H+BRo8VHmbs=',
+        active: true
       }
     ])
   }
