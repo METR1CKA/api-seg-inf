@@ -28,6 +28,10 @@ Route.get('/', ({ response }) => {
   })
 })
 
+Route.get('request', ({ request, response }) => {
+  return response.ok({ request })
+})
+
 Route.get('api/v1', ({ response }) => {
   return response.ok({
     message: 'API V1',
