@@ -20,7 +20,5 @@ export default class ValidatorException {
         rule
       }
     })
-
-    // return
   }
 }
