@@ -11,7 +11,7 @@ io.on('connection', async socket => {
   socket.on('send:message', data => {
     console.log('\nMessage:', data)
 
-    socket.broadcast.emit('get:messages', data)
+    io.emit('get:messages', data)
   })
 
   socket.on('send:sala', async sala => {

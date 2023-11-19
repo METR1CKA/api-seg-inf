@@ -6,9 +6,7 @@ import Sala from 'App/Models/Sala'
 
 export default class SalasController {
   public async get({ params, response }: HttpContextContract) {
-    const salas = await Sala.query()
-      .where({ active: true })
-      .orderBy('id', 'desc')
+    const salas = await Sala.all()
 
     if (params.id) {
       const sala = salas.find(sala => sala.id == params.id)
