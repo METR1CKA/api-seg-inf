@@ -1,24 +1,29 @@
-import { Server } from 'socket.io'
 import AdonisServer from '@ioc:Adonis/Core/Server'
+import Env from '@ioc:Adonis/Core/Env'
+import { Server } from 'socket.io'
 
 class Ws {
   public io: Server
   private booted: boolean = false
   private instance = AdonisServer.instance!
-  private configs = {
-    cors: {
-      origin: true
-    }
-  }
 
   public boot(): void {
-    const { booted, instance, configs } = this
+    const { booted, instance } = this
 
     if (booted) return
 
     this.booted = true
 
-    this.io = new Server(instance, configs)
+    this.io = new Server(instance, {
+      cors: {
+        origin: Env.get('NODE_ENV') == 'development'
+          ? true
+          : 'http://localhost/'
+      },
+      path: Env.get('NODE_ENV') == 'development'
+        ? '/socket.io'
+        : '/web-socket'
+    })
   }
 }
 
