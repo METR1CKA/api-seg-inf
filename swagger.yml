@@ -26,7 +26,7 @@ components:
       properties:
         id:
           type: "number"
-          example: 761
+          example: 321
         nombre:
           type: "string"
           example: "string"
