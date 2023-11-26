@@ -10,31 +10,35 @@ export default class SalasController {
   * @description Returns array of salas
   * @responseBody 200 - { "status": "Éxito", "message": "Salas encontradas", "data": [ { "id": "number", "nombre": "string", "password": "string", "active": "boolean", "created_at": "datetime", "updated_at": "datetime" } ] }
   */
-  public async get({ params, response }: HttpContextContract) {
-    const salas = await Sala.all()
+  public async get({ response }: HttpContextContract) {
+    return response.ok({
+      status: 'Éxito',
+      message: 'Salas encontradas',
+      data: await Sala.all()
+    })
+  }
 
-    if (params.id) {
-      const sala = salas.find(sala => sala.id == params.id)
+  /**
+  * @get
+  * @description Returns object of sala
+  * @responseBody 200 - { "status": "Éxito", "message": "Sala encontrada", "data": { "id": "number", "nombre": "string", "password": "string", "active": "boolean", "created_at": "datetime", "updated_at": "datetime" } }
+  * @responseBody 404 - { "status": "Éxito", "message": "Sala no encontrada", "data": "null" }
+  */
+  public async getId({ params, response }: HttpContextContract) {
+    const sala = await Sala.find(params.id)
 
-      if (!sala) {
-        return response.notFound({
-          status: 'Error',
-          message: 'Sala no encontrada',
-          data: null
-        })
-      }
-
-      return response.ok({
-        status: 'Éxito',
-        message: 'Sala encontrada',
-        data: sala
+    if (!sala) {
+      return response.notFound({
+        status: 'Error',
+        message: 'Sala no encontrada',
+        data: null
       })
     }
 
     return response.ok({
       status: 'Éxito',
-      message: 'Salas encontradas',
-      data: salas
+      message: 'Sala encontrada',
+      data: sala
     })
   }
 
@@ -42,6 +46,8 @@ export default class SalasController {
   * @create
   * @description Create a new sala
   * @requestBody {"nombre": "string", "password": "string"}
+  * @responseBody 200 - { "status": "Éxito", "message": "Sala creada", "data": "null" }
+  * @responseBody 400 - { "status": "Error", "message": "message validator", "data": { "field": "field", "rule": "rule" } }
   */
   public async create(ctx: HttpContextContract) {
     const { request, response } = ctx
@@ -64,7 +70,10 @@ export default class SalasController {
   /**
    * @update
    * @description Update a sala
-   * @requestBody <Sala>
+   * @requestBody {"nombre": "string", "password": "string"}
+   * @responseBody 200 - { "status": "Éxito", "message": "Sala actualizada", "data": "null" }
+   * @responseBody 400 - { "status": "Error", "message": "message validator", "data": { "field": "field", "rule": "rule" } }
+   * @responseBody 404 - { "status": "Éxito", "message": "Sala no encontrada", "data": "null" }
   */
   public async update(ctx: HttpContextContract) {
     const { params, request, response } = ctx
@@ -97,7 +106,8 @@ export default class SalasController {
   /**
    * @delete
    * @description Delete a sala
-   * @paramPath id integer - Id of sala
+   * @responseBody 200 - { "status": "Éxito", "message": "Sala desactivada o Sala activada", "data": "null" }
+   * @responseBody 404 - { "status": "Éxito", "message": "Sala no encontrada", "data": "null" }
   */
   public async delete({ params, response }: HttpContextContract) {
     const sala = await Sala.find(params.id)

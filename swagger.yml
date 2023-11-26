@@ -26,7 +26,7 @@ components:
       properties:
         id:
           type: "number"
-          example: 898
+          example: 761
         nombre:
           type: "string"
           example: "string"
@@ -60,16 +60,11 @@ paths:
           content:
             application/json: {}
       security: []
-  /api/v1/salas/get/{id?}:
+  /api/v1/salas/get:
     get:
       summary: " (SalasController::get)"
-      description: "OK: { \"status\": \"Éxito\", \"message\": \"Salas encontradas\", \"data\": [ { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } ] }"
-      parameters:
-        - in: "path"
-          name: "id?"
-          schema:
-            type: "string"
-          required: true
+      description: "OK: { \"status\": \"Éxito\", \"message\": \"Sala encontrada\", \"data\": { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } }"
+      parameters: []
       tags:
         - "V1"
       responses:
@@ -80,15 +75,43 @@ paths:
                 type: "object"
               example:
                 status: "Éxito"
-                message: "Salas encontradas"
+                message: "Sala encontrada"
                 data:
-                  - id: "number"
-                    nombre: "string"
-                    password: "string"
-                    active: "boolean"
-                    created_at: "datetime"
-                    updated_at: "datetime"
-          description: "OK: { \"status\": \"Éxito\", \"message\": \"Salas encontradas\", \"data\": [ { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } ] }"
+                  id: "number"
+                  nombre: "string"
+                  password: "string"
+                  active: "boolean"
+                  created_at: "datetime"
+                  updated_at: "datetime"
+          description: "OK: { \"status\": \"Éxito\", \"message\": \"Sala encontrada\", \"data\": { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } }"
+        404:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala no encontrada"
+                data: "null"
+          description: "Not Found: { \"status\": \"Éxito\", \"message\": \"Sala no encontrada\", \"data\": \"null\" }"
+      security: []
+  /api/v1/salas/get/{id}:
+    get:
+      summary: " (SalasController::getId)"
+      description: ""
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "V1"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
       security: []
   /api/v1/salas/create:
     post:
@@ -98,10 +121,28 @@ paths:
       tags:
         - "V1"
       responses:
-        201:
-          description: "Created"
+        200:
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala creada"
+                data: "null"
+          description: "OK: { \"status\": \"Éxito\", \"message\": \"Sala creada\", \"data\": \"null\" }"
+        400:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Error"
+                message: "message validator"
+                data:
+                  field: "field"
+                  rule: "rule"
+          description: "Bad Request: { \"status\": \"Error\", \"message\": \"message validator\", \"data\": { \"field\": \"field\", \"rule\": \"rule\" } }"
       security: []
       requestBody:
         content:
@@ -124,22 +165,47 @@ paths:
       tags:
         - "V1"
       responses:
-        204:
-          description: "No Content"
+        200:
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala actualizada"
+                data: "null"
+          description: "OK: { \"status\": \"Éxito\", \"message\": \"Sala actualizada\", \"data\": \"null\" }"
+        400:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Error"
+                message: "message validator"
+                data:
+                  field: "field"
+                  rule: "rule"
+          description: "Bad Request: { \"status\": \"Error\", \"message\": \"message validator\", \"data\": { \"field\": \"field\", \"rule\": \"rule\" } }"
+        404:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala no encontrada"
+                data: "null"
+          description: "Not Found: { \"status\": \"Éxito\", \"message\": \"Sala no encontrada\", \"data\": \"null\" }"
       security: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Sala"
+              type: "object"
             example:
-              id: 898
               nombre: "string"
-              active: true
-              createdAt: "2021-03-23T16:13:08.489+01:00"
-              updatedAt: "2021-03-23T16:13:08.489+01:00"
+              password: "string"
   /api/v1/salas/delete/{id}:
     delete:
       summary: " (SalasController::delete)"
@@ -150,20 +216,29 @@ paths:
           schema:
             type: "string"
           required: true
-        - in: "path"
-          name: "id integer"
-          description: "Id of sala"
-          schema:
-            example: "string"
-            type: "string"
-          required: true
       tags:
         - "V1"
       responses:
-        202:
-          description: "Accepted"
+        200:
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala desactivada o Sala activada"
+                data: "null"
+          description: "OK: { \"status\": \"Éxito\", \"message\": \"Sala desactivada o Sala activada\", \"data\": \"null\" }"
+        404:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Sala no encontrada"
+                data: "null"
+          description: "Not Found: { \"status\": \"Éxito\", \"message\": \"Sala no encontrada\", \"data\": \"null\" }"
       security: []
   /:
     get:

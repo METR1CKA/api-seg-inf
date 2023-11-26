@@ -25,6 +25,7 @@ import 'App/Routes/salas'
 
 Route.get('/', ({ response }) => {
   return response.ok({
+    status: 'Éxito',
     message: 'Practica de encriptacion API',
     data: null
   })
@@ -36,6 +37,7 @@ Route.get('request', ({ request, response }) => {
 
 Route.get('api/v1', ({ response }) => {
   return response.ok({
+    status: 'Éxito',
     message: 'API V1',
     data: {
       version: '1.0.0'
@@ -53,6 +55,7 @@ Route.get('docs', async () => {
 
 Route.any('*', ({ request, response }) => {
   return response.notFound({
+    status: 'Error',
     message: 'Ruta no encontrada',
     data: {
       url: request.url(),
