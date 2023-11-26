@@ -1,0 +1,224 @@
+openapi: "3.0.0"
+info:
+  title: "Practica Encriptacion API"
+  version: "1.0.0"
+components:
+  responses:
+    Forbidden:
+      description: "Access token is missing or invalid"
+    Accepted:
+      description: "The request was accepted"
+    Created:
+      description: "The resource has been created"
+    NotFound:
+      description: "The resource has been created"
+    NotAcceptable:
+      description: "The resource has been created"
+  securitySchemes:
+    BearerAuth:
+      type: "http"
+      scheme: "bearer"
+  schemas:
+    Any:
+      description: "Any JSON object not defined as schema"
+    Sala:
+      type: "object"
+      properties:
+        id:
+          type: "number"
+          example: 898
+        nombre:
+          type: "string"
+          example: "string"
+        password:
+          type: "string"
+          example: "S3cur3P4s5word!"
+          format: "password"
+        active:
+          type: "boolean"
+          example: true
+        createdAt:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+        updatedAt:
+          type: "string"
+          example: "2021-03-23T16:13:08.489+01:00"
+          format: "date-time"
+      description: "Model"
+paths:
+  /uploads/*:
+    get:
+      summary: " (route.ts)"
+      description: ""
+      parameters: []
+      tags:
+        - "*"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /api/v1/salas/get/{id?}:
+    get:
+      summary: " (SalasController::get)"
+      description: "OK: { \"status\": \"Éxito\", \"message\": \"Salas encontradas\", \"data\": [ { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } ] }"
+      parameters:
+        - in: "path"
+          name: "id?"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "V1"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                status: "Éxito"
+                message: "Salas encontradas"
+                data:
+                  - id: "number"
+                    nombre: "string"
+                    password: "string"
+                    active: "boolean"
+                    created_at: "datetime"
+                    updated_at: "datetime"
+          description: "OK: { \"status\": \"Éxito\", \"message\": \"Salas encontradas\", \"data\": [ { \"id\": \"number\", \"nombre\": \"string\", \"password\": \"string\", \"active\": \"boolean\", \"created_at\": \"datetime\", \"updated_at\": \"datetime\" } ] }"
+      security: []
+  /api/v1/salas/create:
+    post:
+      summary: " (SalasController::create)"
+      description: "Create a new sala"
+      parameters: []
+      tags:
+        - "V1"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+            example:
+              nombre: "string"
+              password: "string"
+  /api/v1/salas/update/{id}:
+    put:
+      summary: "Update v1 (SalasController::update)"
+      description: "Update a sala"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+      tags:
+        - "V1"
+      responses:
+        204:
+          description: "No Content"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sala"
+            example:
+              id: 898
+              nombre: "string"
+              active: true
+              createdAt: "2021-03-23T16:13:08.489+01:00"
+              updatedAt: "2021-03-23T16:13:08.489+01:00"
+  /api/v1/salas/delete/{id}:
+    delete:
+      summary: " (SalasController::delete)"
+      description: "Delete a sala"
+      parameters:
+        - in: "path"
+          name: "id"
+          schema:
+            type: "string"
+          required: true
+        - in: "path"
+          name: "id integer"
+          description: "Id of sala"
+          schema:
+            example: "string"
+            type: "string"
+          required: true
+      tags:
+        - "V1"
+      responses:
+        202:
+          description: "Accepted"
+          content:
+            application/json: {}
+      security: []
+  /:
+    get:
+      summary: " (route.ts)"
+      description: ""
+      parameters: []
+      tags: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /request:
+    get:
+      summary: " (route.ts)"
+      description: ""
+      parameters: []
+      tags: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /api/v1:
+    get:
+      summary: " (route.ts)"
+      description: ""
+      parameters: []
+      tags:
+        - "V1"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json: {}
+      security: []
+  /*:
+    patch:
+      summary: " (route.ts)"
+      description: ""
+      parameters: []
+      tags: []
+      responses:
+        undefined:
+          description: "Unknown"
+          content:
+            application/json: {}
+      security: []
+      requestBody:
+        content:
+          application/json: {}
+tags:
+  - name: "*"
+    description: "Everything related to *"
+  - name: "V1"
+    description: "Everything related to V1"

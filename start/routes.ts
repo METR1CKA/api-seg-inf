@@ -19,6 +19,8 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import AutoSwagger from 'adonis-autoswagger'
+import swagger from 'Config/swagger'
 import 'App/Routes/salas'
 
 Route.get('/', ({ response }) => {
@@ -39,6 +41,14 @@ Route.get('api/v1', ({ response }) => {
       version: '1.0.0'
     }
   })
+})
+
+Route.get('swagger', async () => {
+  return AutoSwagger.docs(Route.toJSON(), swagger)
+})
+
+Route.get('docs', async () => {
+  return AutoSwagger.ui('swagger')
 })
 
 Route.any('*', ({ request, response }) => {

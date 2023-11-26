@@ -5,6 +5,11 @@ import ValidatorException from 'App/Exceptions/ValidatorException'
 import Sala from 'App/Models/Sala'
 
 export default class SalasController {
+  /**
+  * @get
+  * @description Returns array of salas
+  * @responseBody 200 - { "status": "Éxito", "message": "Salas encontradas", "data": [ { "id": "number", "nombre": "string", "password": "string", "active": "boolean", "created_at": "datetime", "updated_at": "datetime" } ] }
+  */
   public async get({ params, response }: HttpContextContract) {
     const salas = await Sala.all()
 
@@ -33,6 +38,11 @@ export default class SalasController {
     })
   }
 
+  /**
+  * @create
+  * @description Create a new sala
+  * @requestBody {"nombre": "string", "password": "string"}
+  */
   public async create(ctx: HttpContextContract) {
     const { request, response } = ctx
 
@@ -51,6 +61,11 @@ export default class SalasController {
     })
   }
 
+  /**
+   * @update
+   * @description Update a sala
+   * @requestBody <Sala>
+  */
   public async update(ctx: HttpContextContract) {
     const { params, request, response } = ctx
 
@@ -79,6 +94,11 @@ export default class SalasController {
     })
   }
 
+  /**
+   * @delete
+   * @description Delete a sala
+   * @paramPath id integer - Id of sala
+  */
   public async delete({ params, response }: HttpContextContract) {
     const sala = await Sala.find(params.id)
 
