@@ -1,27 +1,23 @@
-import { getSalas, createSala } from 'App/Controllers/Ws/SalasController'
-import Ws from 'App/Services/Ws'
+/*
+|--------------------------------------------------------------------------
+| Websocket events
+|--------------------------------------------------------------------------
+|
+| This file is dedicated for defining websocket namespaces and event handlers.
+|
+*/
 
-Ws.boot()
+import Ws from '@ioc:Ruby184/Socket.IO/Ws'
 
-const { io } = Ws
-
-io.on('connection', async socket => {
-  socket.emit('get:salas', await getSalas())
-
-  socket.on('send:message', data => {
-    console.log('\nMessage:', data)
-
-    io.emit('get:messages', data)
+Ws
+  .namespace('/')
+  .connected(({ socket }) => {
+    console.log('new websocket connection: ', socket.id)
   })
-
-  socket.on('send:sala', async sala => {
-    sala = typeof sala == 'string'
-      ? JSON.parse(sala)
-      : sala
-
-    await createSala({ sala })
-
-    io.emit('get:salas', await getSalas())
+  .disconnected(({ socket }, reason) => {
+    console.log('websocket disconnecting: ', socket.id, reason)
   })
-})
-
+  .on('hello', ({ socket }, msg: any) => {
+    console.log('websocket greeted: ', socket.id, msg)
+    socket.emit('greeted', msg)
+  })
